@@ -3,7 +3,7 @@ import validSchema from '../__fixtures__/typed-data-1.json';
 import { validateTypedData } from './json';
 
 describe('validateTypedData', () => {
-  it('validates an EIP-712 JSON schema', () => {
+  it('validates an CIP-23 JSON schema', () => {
     expect(validateTypedData(validSchema)).toBe(true);
   });
 

@@ -15,7 +15,7 @@
     "uint256",
     "Mail",
     "Person",
-    "EIP712Domain",
+    "CIP23Domain",
     "address[]",
     "address[1]",
     "address[100]"

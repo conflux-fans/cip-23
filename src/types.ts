@@ -24,7 +24,7 @@ const TYPE = refinement(string(), 'Type', (type, context) => {
   return isValidType(context.branch[0].types, type);
 });
 
-export const EIP_712_TYPE = object({
+export const CIP_23_TYPE = object({
   name: string(),
   type: TYPE
 });
@@ -38,9 +38,9 @@ export const EIP_712_TYPE = object({
  * Note that the `uint` and `int` aliases like in Solidity, and fixed point numbers are not supported by the EIP-712
  * standard.
  */
-export type EIP712Type = StructType<typeof EIP_712_TYPE>;
+export type CIP23Type = StructType<typeof CIP_23_TYPE>;
 
-export const EIP_712_DOMAIN_TYPE = object({
+export const CIP_23_DOMAIN_TYPE = object({
   name: optional(string()),
   version: optional(string()),
   chainId: optional(union([string(), number()])),
@@ -49,21 +49,21 @@ export const EIP_712_DOMAIN_TYPE = object({
 });
 
 /**
- * The EIP712 domain struct. Any of these fields are optional, but it must contain at least one field.
+ * The CIP23 domain struct. Any of these fields are optional, but it must contain at least one field.
  */
-export type EIP712Domain = StructType<typeof EIP_712_DOMAIN_TYPE>;
+export type CIP23Domain = StructType<typeof CIP_23_DOMAIN_TYPE>;
 
-export const EIP_712_TYPED_DATA_TYPE = object({
-  types: intersection([type({ EIP712Domain: array(EIP_712_TYPE) }), record(string(), array(EIP_712_TYPE))]),
+export const CIP_23_TYPED_DATA_TYPE = object({
+  types: intersection([type({ CIP23Domain: array(CIP_23_TYPE) }), record(string(), array(CIP_23_TYPE))]),
   primaryType: string(),
-  domain: EIP_712_DOMAIN_TYPE,
+  domain: CIP_23_DOMAIN_TYPE,
   message: object()
 });
 
 /**
  * The complete typed data, with all the structs, domain data, primary type of the message, and the message itself.
  */
-export type TypedData = StructType<typeof EIP_712_TYPED_DATA_TYPE>;
+export type TypedData = StructType<typeof CIP_23_TYPED_DATA_TYPE>;
 
 /**
  * Checks if a type is valid with the given `typedData`. The following types are valid:

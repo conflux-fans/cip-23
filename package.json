@@ -1,18 +1,18 @@
 {
-  "name": "eip-712",
+  "name": "cip-23",
   "version": "0.4.3",
-  "description": "Tiny library with utility functions that can help with signing and verifying EIP-712 based messages",
-  "author": "Maarten Zuidhoorn <maarten@zuidhoorn.com>",
+  "description": "Tiny library with utility functions that can help with signing and verifying CIP-23 based messages",
+  "author": "Pana <pana.wang@confluxnetwork.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mrtenz/eip-712.git"
+    "url": "https://github.com/conflux-fans/cip-23.git"
   },
   "bugs": {
-    "url": "https://github.com/Mrtenz/eip-712/issues"
+    "url": "https://github.com/conflux-fans/cip-23/issues"
   },
   "keywords": [
-    "ethereum",
-    "eip712"
+    "conflux",
+    "cip23"
   ],
   "license": "MIT",
   "main": "lib/cjs/index.js",

@@ -171,7 +171,7 @@ export const getStructHash = (typedData: TypedData, type: string, data: Record<s
 export const getMessage = (typedData: TypedData, hash?: boolean): Buffer => {
   const message = Buffer.concat([
     EIP_191_PREFIX,
-    getStructHash(typedData, 'EIP712Domain', typedData.domain as Record<string, unknown>),
+    getStructHash(typedData, 'CIP23Domain', typedData.domain as Record<string, unknown>),
     getStructHash(typedData, typedData.primaryType, typedData.message)
   ]);
 

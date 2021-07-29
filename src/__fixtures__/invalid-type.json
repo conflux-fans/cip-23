@@ -1,6 +1,6 @@
 {
   "types": {
-    "EIP712Domain": [
+    "CIP23Domain": [
       {
         "name": "name",
         "type": "[]"

@@ -1,10 +1,10 @@
-import { EIP712Type, isValidType } from './types';
+import { CIP23Type, isValidType } from './types';
 
 describe('isValidType', () => {
   it('checks if a type is valid for the given typed data', () => {
     // prettier-ignore
-    const types: Record<string, EIP712Type[]> = {
-      EIP712Domain: [
+    const types: Record<string, CIP23Type[]> = {
+      CIP23Domain: [
         { name: 'name', type: 'string' },
         { name: 'version', type: 'string' },
         { name: 'chainId', type: 'uint256' },
@@ -21,8 +21,8 @@ describe('isValidType', () => {
       ]
     };
 
-    expect(isValidType(types, 'EIP712Domain')).toBe(true);
-    expect(isValidType(types, 'EIP712Domain[]')).toBe(true);
+    expect(isValidType(types, 'CIP23Domain')).toBe(true);
+    expect(isValidType(types, 'CIP23Domain[]')).toBe(true);
     expect(isValidType(types, 'Person')).toBe(true);
     expect(isValidType(types, 'Mail')).toBe(true);
 
