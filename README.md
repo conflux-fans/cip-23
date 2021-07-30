@@ -155,7 +155,3 @@ const typedData = { /*...*/ };
 console.log(getDependencies(typedData, 'CIP23Domain')); // ['CIP23Domain']
 console.log(getDependencies(typedData, 'Mail')); // ['Mail', 'Person']
 ```
-
-### TODO
-
-1. Support Conflux base32 address

@@ -1,6 +1,6 @@
 {
   "name": "cip-23",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tiny library with utility functions that can help with signing and verifying CIP-23 based messages",
   "author": "Pana <pana.wang@confluxnetwork.org",
   "repository": {
@@ -44,6 +44,7 @@
     "prepare": "yarn run build"
   },
   "dependencies": {
+    "@conflux-dev/conflux-address-js": "^1.2.1",
     "@findeth/abi": "^0.3.0",
     "keccak": "^3.0.1",
     "superstruct": "^0.10.12"
