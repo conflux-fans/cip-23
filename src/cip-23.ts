@@ -166,6 +166,7 @@ export const getStructHash = (typedData: TypedData, type: string, data: Record<s
  *
  * @param {TypedData} typedData
  * @param {boolean} hash
+ * @param {boolean} verifyConflux[true]
  * @return {Buffer}
  */
 export const getMessage = (typedData: TypedData, hash?: boolean, verifyConflux = true): Buffer => {
