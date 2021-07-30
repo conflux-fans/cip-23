@@ -7,7 +7,7 @@ import invalidType from './__fixtures__/invalid-type.json';
 import mailTypedData from './__fixtures__/typed-data-1.json';
 import approvalTypedData from './__fixtures__/typed-data-2.json';
 import arrayTypedData from './__fixtures__/typed-data-3.json';
-import { asArray, encodeData, encodeType, getDependencies, getMessage, getStructHash, getTypeHash } from './eip-712';
+import { asArray, encodeData, encodeType, getDependencies, getMessage, getStructHash, getTypeHash } from './cip-23';
 
 describe('getDependencies', () => {
   it('returns all dependencies for the primary type', () => {
