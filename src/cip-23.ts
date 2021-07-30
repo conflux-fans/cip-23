@@ -168,10 +168,11 @@ export const getStructHash = (typedData: TypedData, type: string, data: Record<s
  * @param {boolean} hash
  * @return {Buffer}
  */
-export const getMessage = (typedData: TypedData, hash?: boolean): Buffer => {
+export const getMessage = (typedData: TypedData, hash?: boolean, verifyConflux = true): Buffer => {
+  const domainName = verifyConflux ? 'CIP23Domain' : 'EIP712Domain';
   const message = Buffer.concat([
     EIP_191_PREFIX,
-    getStructHash(typedData, 'CIP23Domain', typedData.domain as Record<string, unknown>),
+    getStructHash(typedData, domainName, typedData.domain as Record<string, unknown>),
     getStructHash(typedData, typedData.primaryType, typedData.message)
   ]);
 

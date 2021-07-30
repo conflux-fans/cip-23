@@ -60,6 +60,15 @@ export const CIP_23_TYPED_DATA_TYPE = object({
   message: object()
 });
 
+export type EIP712Domain = StructType<typeof CIP_23_DOMAIN_TYPE>;
+
+export const EIP_712_TYPED_DATA_TYPE = object({
+  types: intersection([type({ EIP712Domain: array(CIP_23_TYPE) }), record(string(), array(CIP_23_TYPE))]),
+  primaryType: string(),
+  domain: CIP_23_DOMAIN_TYPE,
+  message: object()
+});
+
 /**
  * The complete typed data, with all the structs, domain data, primary type of the message, and the message itself.
  */

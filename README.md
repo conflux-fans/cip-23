@@ -5,7 +5,9 @@
 [![Actions Status](https://github.com/conflux-fans/cip-23/workflows/CI/badge.svg)](https://github.com/conflux-fans/cip-23/actions) 
 [![codecov](https://codecov.io/gh/conflux-fans/cip-23/branch/master/graph/badge.svg)](https://codecov.io/gh/conflux-fans/cip-23)
 
-This is a library for Node.js and web browsers with some utility functions that can help with signing and verifying [EIP-712](https://eips.ethereum.org/EIPS/eip-712) based messages. It is fully written in TypeScript, and is currently only compatible with the latest specification of EIP-712 ([eth_signTypedData_v4](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)).
+This libray if forked from [Mrtenz/eip-712](https://github.com/Mrtenz/eip-712) to Support Conflux [CIP-23](https://github.com/Conflux-Chain/CIPs/blob/2d9fdbdb08f66f705348669a6cd85e2d53509e97/CIPs/cip-23.md)
+
+[Mrtenz/eip-712](https://github.com/Mrtenz/eip-712) is a library for Node.js and web browsers with some utility functions that can help with signing and verifying [EIP-712](https://eips.ethereum.org/EIPS/eip-712) based messages. It is fully written in TypeScript, and is currently only compatible with the latest specification of EIP-712 ([eth_signTypedData_v4](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)).
 
 https://eips.ethereum.org/EIPS/eip-712
 
@@ -151,3 +153,8 @@ const typedData = { /*...*/ };
 console.log(getDependencies(typedData, 'CIP23Domain')); // ['CIP23Domain']
 console.log(getDependencies(typedData, 'Mail')); // ['Mail', 'Person']
 ```
+
+### TODO
+
+1. Support Conflux base32 address
+2. Compatible with EIP-712
