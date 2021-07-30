@@ -75,7 +75,7 @@ First, define your typed data as a JSON object, according to the JSON schema spe
 
 Here is a brief description of the functions available in this library. For more detailed examples, you can refer to [`src/cip-23.test.ts`](https://github.com/conflux-fans/cip-23/blob/master/src/cip-23.test.ts), or to the examples in the [`examples`](https://github.com/conflux-fans/cip-23/blob/master/examples) folder.
 
-#### `getMessage(typedData, hash?)`
+#### `getMessage(typedData, hash?, domainName?)`
 
 This function will return the full EIP-191 encoded message to be signed as Buffer, for the typed data specified. If `hash` is enabled, the message will be hashed using Keccak256.
 
