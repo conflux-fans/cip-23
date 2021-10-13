@@ -7,6 +7,7 @@ import invalidType from './__fixtures__/invalid-type.json';
 import mailTypedData from './__fixtures__/typed-data-1.json';
 import approvalTypedData from './__fixtures__/typed-data-2.json';
 import arrayTypedData from './__fixtures__/typed-data-3.json';
+import mailTypedDataWithRecursiveTypes from './__fixtures__/typed-data-4.json';
 import { asArray, encodeData, encodeType, getDependencies, getMessage, getStructHash, getTypeHash } from './cip-23';
 
 describe('getDependencies', () => {
@@ -200,6 +201,9 @@ describe('getStructHash', () => {
 describe('getMessage', () => {
   it('returns the full encoded and hashed message to sign', () => {
     expect(getMessage(mailTypedData).toString('hex')).toBe(
+      '190108d4df1fd1a7d9c1a27a86b3b19b3258bd6f07d9ed1b88f52705f12453a4a5a1c52c0ee5d84264471806290a3f2c4cecfc5490626bf912d01f240d7a274b371e'
+    );
+    expect(getMessage(mailTypedDataWithRecursiveTypes).toString('hex')).toBe(
       '190108d4df1fd1a7d9c1a27a86b3b19b3258bd6f07d9ed1b88f52705f12453a4a5a1c52c0ee5d84264471806290a3f2c4cecfc5490626bf912d01f240d7a274b371e'
     );
     expect(getMessage(approvalTypedData).toString('hex')).toBe(
