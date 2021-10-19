@@ -2,8 +2,6 @@
 
 ![Version](https://img.shields.io/npm/v/cip-23) 
 ![License](https://img.shields.io/github/license/conflux-fans/cip-23) 
-[![Actions Status](https://github.com/conflux-fans/cip-23/workflows/CI/badge.svg)](https://github.com/conflux-fans/cip-23/actions) 
-[![codecov](https://codecov.io/gh/conflux-fans/cip-23/branch/master/graph/badge.svg)](https://codecov.io/gh/conflux-fans/cip-23)
 
 This libray if forked from [Mrtenz/eip-712](https://github.com/Mrtenz/eip-712) to Support Conflux [CIP-23](https://github.com/Conflux-Chain/CIPs/blob/2d9fdbdb08f66f705348669a6cd85e2d53509e97/CIPs/cip-23.md)
 
@@ -86,7 +84,7 @@ const typedData = { /*...*/ };
 console.log(getMessage(typedData).toString('hex')); // 1901f2cee375fa42b42143804025fc449deafd50cc031ca257e0b194a650a912090fc52c0ee5d84264471806290a3f2c4cecfc5490626bf912d01f240d7a274b371e
 console.log(getMessage(typedData, true).toString('hex')); // be609aee343fb3c4b28e1df9e632fca64fcfaede20f02e86244efddf30957bd2
 // Generate a Ethereum EIP712 message
-console.log(getMessage(typedData, true, false).toString('hex')); 
+console.log(getMessage(typedData, true, "EIP712Domain").toString('hex')); 
 ```
 
 #### `asArray(typedData)`

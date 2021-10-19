@@ -30,13 +30,13 @@ export const getDependencies = (typedData: TypedData, type: string, dependencies
 
   return [
     actualType,
-    ...typedData.types[actualType].reduce<string[]>(
-      (previous, type) => [
-        ...previous,
-        ...getDependencies(typedData, type.type, previous).filter((dependency) => !previous.includes(dependency))
-      ],
-      []
-    )
+    ...typedData.types[actualType].reduce<string[]>((previous, type) => {
+      const newDependencies =
+        actualType === type.type
+          ? []
+          : getDependencies(typedData, type.type, previous).filter((dependency) => !previous.includes(dependency));
+      return [...previous, ...newDependencies];
+    }, [])
   ];
 };
 
@@ -130,7 +130,11 @@ export const encodeData = (typedData: TypedData, type: string, data: Record<stri
   const [types, values] = typedData.types[type].reduce<[string[], unknown[]]>(
     ([types, values], field) => {
       if (data[field.name] === undefined || data[field.name] === null) {
-        throw new Error(`Cannot encode data: missing data for '${field.name}'`);
+        // throw new Error(`Cannot encode data: missing data for '${field.name}'`);
+        return [
+          [...types, 'bytes32'],
+          [...values, '0x0000000000000000000000000000000000000000000000000000000000000000']
+        ];
       }
 
       const value = data[field.name];
