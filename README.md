@@ -1,7 +1,7 @@
 # `cip-23`
 
-![Version](https://img.shields.io/npm/v/cip-23) 
-![License](https://img.shields.io/github/license/conflux-fans/cip-23) 
+![Version](https://img.shields.io/npm/v/cip-23)
+![License](https://img.shields.io/github/license/conflux-fans/cip-23)
 
 This libray if forked from [Mrtenz/eip-712](https://github.com/Mrtenz/eip-712) to Support Conflux [CIP-23](https://github.com/Conflux-Chain/CIPs/blob/2d9fdbdb08f66f705348669a6cd85e2d53509e97/CIPs/cip-23.md)
 
@@ -78,13 +78,13 @@ Here is a brief description of the functions available in this library. For more
 This function will return the full EIP-191 encoded message to be signed as Buffer, for the typed data specified. If `hash` is enabled, the message will be hashed using Keccak256.
 
 ```js
-import { getMessage } from 'cip-23';
+import { getMessage， bytesToHex } from 'cip-23';
 
 const typedData = { /*...*/ };
-console.log(getMessage(typedData).toString('hex')); // 1901f2cee375fa42b42143804025fc449deafd50cc031ca257e0b194a650a912090fc52c0ee5d84264471806290a3f2c4cecfc5490626bf912d01f240d7a274b371e
-console.log(getMessage(typedData, true).toString('hex')); // be609aee343fb3c4b28e1df9e632fca64fcfaede20f02e86244efddf30957bd2
+console.log(bytesToHex(getMessage(typedData))); // 1901f2cee375fa42b42143804025fc449deafd50cc031ca257e0b194a650a912090fc52c0ee5d84264471806290a3f2c4cecfc5490626bf912d01f240d7a274b371e
+console.log(bytesToHex(getMessage(typedData, true))); // be609aee343fb3c4b28e1df9e632fca64fcfaede20f02e86244efddf30957bd2
 // Generate a Ethereum EIP712 message
-console.log(getMessage(typedData, true, "EIP712Domain").toString('hex')); 
+console.log(bytesToHex(getMessage(typedData, true, "EIP712Domain")));
 ```
 
 #### `asArray(typedData)`
@@ -103,10 +103,10 @@ console.log(asArray(typedData)); // [ ['Cow', '0xCD2a3d9F938E13CD947Ec05AbC7FE73
 This function returns a Keccak-256 hash for a single struct type (e.g. cip-23, Person or Mail).
 
 ```js
-import { getStructHash } from 'cip-23';
+import { getStructHash,bytesToHex } from 'cip-23';
 
 const typedData = { /*...*/ };
-console.log(getStructHash(typedData, 'cip-23', typedData.domain).toString('hex')); // f2cee375fa42b42143804025fc449deafd50cc031ca257e0b194a650a912090f
+console.log(bytesToHex(getStructHash(typedData, 'cip-23', typedData.domain))); // f2cee375fa42b42143804025fc449deafd50cc031ca257e0b194a650a912090f
 ```
 
 #### `encodeData(typedData, type, data)`
@@ -114,10 +114,10 @@ console.log(getStructHash(typedData, 'cip-23', typedData.domain).toString('hex')
 This function returns the raw ABI encoded data for the struct type.
 
 ```js
-import { encodeData } from 'cip-23';
+import { encodeData,bytesToHex } from 'cip-23';
 
 const typedData = { /*...*/ };
-console.log(encodeData(typedData, 'CIP23Domain', typedData.domain).toString('hex')); // 8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400fc70ef06638535b4881fafcac8287e210e3769ff1a8e91f1b95d6246e61e4d3c6c89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc60000000000000000000000000000000000000000000000000000000000000001000000000000000000000000cccccccccccccccccccccccccccccccccccccccc
+console.log(bytesToHex(encodeData(typedData, 'CIP23Domain', typedData.domain))); // 8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400fc70ef06638535b4881fafcac8287e210e3769ff1a8e91f1b95d6246e61e4d3c6c89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc60000000000000000000000000000000000000000000000000000000000000001000000000000000000000000cccccccccccccccccccccccccccccccccccccccc
 ```
 
 #### `getTypeHash(typedData, type)`
@@ -125,10 +125,10 @@ console.log(encodeData(typedData, 'CIP23Domain', typedData.domain).toString('hex
 This function returns the type hash for a struct type. This is the same as `Keccak256(CIP23Domain(string name,string version,uint256 chainId,address verifyingContract))`, with optional sub-types automatically included too.
 
 ```js
-import { getTypeHash } from 'cip-23';
+import { getTypeHash,bytesToHex } from 'cip-23';
 
 const typedData = { /*...*/ };
-console.log(getTypeHash(typedData, 'CIP23Domain').toString('hex')); // 8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f
+console.log(bytesToHex(getTypeHash(typedData, 'CIP23Domain'))); // 8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f
 ```
 
 #### `encodeType(typedData, type)`
