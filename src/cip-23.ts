@@ -1,7 +1,8 @@
+import { concatBytes, hexToBytes, toBytes, isBytes } from '@noble/hashes/utils';
 import { ARRAY_REGEX, TYPE_REGEX, TypedData } from './types';
-import { keccak256, toBuffer, validateTypedData, encode } from './utils';
+import { keccak256, validateTypedData, encode } from './utils';
 
-const EIP_191_PREFIX = Buffer.from('1901', 'hex');
+const EIP_191_PREFIX = hexToBytes('1901'); //Buffer.from('1901', 'hex');
 
 /**
  * Get the dependencies of a struct type. If a struct has the same dependency multiple times, it's only included once
@@ -63,22 +64,22 @@ export const encodeType = (typedData: TypedData, type: string): string => {
  *
  * @param {TypedData} typedData
  * @param {string} type
- * @return {BufferEncoding}
+ * @return {Uint8Array}
  */
-export const getTypeHash = (typedData: TypedData, type: string): Buffer => {
-  return keccak256(encodeType(typedData, type), 'utf8');
+export const getTypeHash = (typedData: TypedData, type: string): Uint8Array => {
+  return keccak256(encodeType(typedData, type));
 };
 
 /**
- * Encodes a single value to an ABI serialisable string, number or Buffer. Returns the data as tuple, which consists of
+ * Encodes a single value to an ABI serialisable string, number or Uint8Array. Returns the data as tuple, which consists of
  * an array of ABI compatible types, and an array of corresponding values.
  *
  * @param {TypedData} typedData
  * @param {string} type
  * @param {any} data
- * @returns {[string[], (string | Buffer | number)[]}
+ * @returns {[string[], (string | Uint8Array | number)[]}
  */
-const encodeValue = (typedData: TypedData, type: string, data: unknown): [string, string | Buffer | number] => {
+const encodeValue = (typedData: TypedData, type: string, data: unknown): [string, string | Uint8Array | number] => {
   const match = type.match(ARRAY_REGEX);
 
   // Checks for array types
@@ -107,26 +108,26 @@ const encodeValue = (typedData: TypedData, type: string, data: unknown): [string
 
   // Strings and arbitrary byte arrays are hashed to bytes32
   if (type === 'string') {
-    return ['bytes32', keccak256(data as string, 'utf8')];
+    return ['bytes32', keccak256(data as string)];
   }
 
   if (type === 'bytes') {
-    return ['bytes32', keccak256(Buffer.isBuffer(data) ? data : toBuffer(data as string), 'hex')];
+    return ['bytes32', keccak256(isBytes(data) ? data : toBytes(data as string))];
   }
 
   return [type, data as string];
 };
 
 /**
- * Encode the data to an ABI encoded Buffer. The data should be a key -> value object with all the required values. All
+ * Encode the data to an ABI encoded Uint8Array. The data should be a key -> value object with all the required values. All
  * dependant types are automatically encoded.
  *
  * @param {TypedData} typedData
  * @param {string} type
  * @param {Record<string, any>} data
- * @return {Buffer}
+ * @return {Uint8Array}
  */
-export const encodeData = (typedData: TypedData, type: string, data: Record<string, unknown>): Buffer => {
+export const encodeData = (typedData: TypedData, type: string, data: Record<string, unknown>): Uint8Array => {
   const [types, values] = typedData.types[type].reduce<[string[], unknown[]]>(
     ([types, values], field) => {
       if (data[field.name] === undefined || data[field.name] === null) {
@@ -158,9 +159,9 @@ export const encodeData = (typedData: TypedData, type: string, data: Record<stri
  * @param {TypedData} typedData
  * @param {string} type
  * @param {Record<string, any>} data
- * @return {Buffer}
+ * @return {Uint8Array}
  */
-export const getStructHash = (typedData: TypedData, type: string, data: Record<string, unknown>): Buffer => {
+export const getStructHash = (typedData: TypedData, type: string, data: Record<string, unknown>): Uint8Array => {
   return keccak256(encodeData(typedData, type, data));
 };
 
@@ -171,14 +172,14 @@ export const getStructHash = (typedData: TypedData, type: string, data: Record<s
  * @param {TypedData} typedData
  * @param {boolean} hash
  * @param {string} domainName Default "CIP23Domain", another option is "EIP712Domain"
- * @return {Buffer}
+ * @return {Uint8Array}
  */
-export const getMessage = (typedData: TypedData, hash?: boolean, domainName = 'CIP23Domain'): Buffer => {
-  const message = Buffer.concat([
+export const getMessage = (typedData: TypedData, hash?: boolean, domainName = 'CIP23Domain'): Uint8Array => {
+  const message = concatBytes(
     EIP_191_PREFIX,
     getStructHash(typedData, domainName, typedData.domain as Record<string, unknown>),
     getStructHash(typedData, typedData.primaryType, typedData.message)
-  ]);
+  );
 
   if (hash) {
     return keccak256(message);
@@ -213,11 +214,12 @@ export const asArray = (
       if (!data[name]) {
         throw new Error(`Cannot get data as array: missing data for '${name}'`);
       }
-
-      return [...array, asArray(typedData, type, data[name] as Record<string, unknown>)];
+      array.push(asArray(typedData, type, data[name] as Record<string, unknown>));
+      return array;
     }
 
     const value = data[name];
-    return [...array, value];
+    array.push(value);
+    return array;
   }, []);
 };

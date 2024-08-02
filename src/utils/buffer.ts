@@ -1,32 +1,13 @@
-import createKeccakHash from 'keccak';
+import { keccak_256 } from '@noble/hashes/sha3';
 
+export { bytesToHex, hexToBytes, utf8ToBytes, toBytes, isBytes, concatBytes } from '@noble/hashes/utils';
 /**
  * Hashes the data with the optional encoding specified. If no encoding is specified, it is assumed that the data is
- * already a Buffer.
+ * already a Uint8Array.
  *
- * @param {string | Buffer} data
- * @param {BufferEncoding} [encoding]
- * @return {Buffer}
+ * @param {string | Uint8Array} data
+ * @return {Uint8Array}
  */
-export const keccak256 = (data: string | Buffer, encoding?: BufferEncoding): Buffer => {
-  return createKeccakHash('keccak256').update(data, encoding).digest();
-};
-
-/**
- * Get a string as Buffer, with the optional encoding specified. If no encoding is specified, it is assumed that the
- * data is a hexadecimal string. The string can optionally contain the 0x prefix.
- *
- * @param {string} data
- * @param {BufferEncoding} encoding
- */
-export const toBuffer = (data: string, encoding?: BufferEncoding): Buffer => {
-  if (!encoding) {
-    if (data.startsWith('0x')) {
-      return Buffer.from(data.substring(2), 'hex');
-    }
-
-    return Buffer.from(data, 'hex');
-  }
-
-  return Buffer.from(data, encoding);
+export const keccak256 = (data: string | Uint8Array): Uint8Array => {
+  return keccak_256(data);
 };

@@ -1,12 +1,12 @@
 import { randomBytes } from 'crypto';
 import { utils } from 'ethers';
-import { getMessage, TypedData } from '../../src';
+import { bytesToHex, getMessage, TypedData } from '../../src';
 
 // The typed data to sign
 // prettier-ignore
 const typedData: TypedData = {
   types: {
-    EIP712Domain: [
+    CIP23Domain: [
       { name: 'name', type: 'string' },
       { name: 'version', type: 'string' },
       { name: 'chainId', type: 'uint256' },
@@ -53,5 +53,5 @@ const message = getMessage(typedData, true);
 const { r, s, v } = signingKey.signDigest(message);
 
 /* eslint-disable no-console */
-console.log(`Message: 0x${message.toString('hex')}`);
+console.log(`Message: 0x${bytesToHex(message)}`);
 console.log(`Signature: (${r}, ${s}, ${v})`);

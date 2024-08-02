@@ -1,12 +1,12 @@
 import { randomBytes } from 'crypto';
 import { ecsign } from 'ethereumjs-util';
-import { getMessage, TypedData } from '../../src';
+import { bytesToHex, getMessage, TypedData } from '../../src';
 
 // The typed data to sign
 // prettier-ignore
 const typedData: TypedData = {
   types: {
-    EIP712Domain: [
+    CIP23Domain: [
       { name: 'name', type: 'string' },
       { name: 'version', type: 'string' },
       { name: 'chainId', type: 'uint256' },
@@ -49,8 +49,8 @@ const privateKey = randomBytes(32);
 const message = getMessage(typedData, true);
 
 // Sign the message with the private key
-const { r, s, v } = ecsign(message, privateKey);
+const { r, s, v } = ecsign(message as any, privateKey);
 
 /* eslint-disable no-console */
-console.log(`Message: 0x${message.toString('hex')}`);
+console.log(`Message: 0x${bytesToHex(message)}`);
 console.log(`Signature: (0x${r.toString('hex')}, 0x${s.toString('hex')}, ${v})`);
